@@ -16,11 +16,7 @@ func ErrorStringMatchesOrContains(t *testing.T, err error, expectingErrorOrPrefi
 	}
 	switch expectingErrorOrPrefix := expectingErrorOrPrefix.(type) {
 	case string:
-		errStr := ""
-		if err != nil {
-			errStr = err.Error()
-		}
-		if strings.Contains(errStr, expectingErrorOrPrefix) {
+		if ErrorStringContains(err, expectingErrorOrPrefix) {
 			return
 		}
 		t.Errorf("error %v doesn't contain string: %v", err, expectingErrorOrPrefix)
@@ -28,8 +24,19 @@ func ErrorStringMatchesOrContains(t *testing.T, err error, expectingErrorOrPrefi
 		if errors.Is(err, expectingErrorOrPrefix) {
 			return
 		}
+		if expectingErrorOrPrefix != nil && ErrorStringContains(err, expectingErrorOrPrefix.Error()) {
+			return
+		}
 		t.Errorf("error %v match error: %v", err, expectingErrorOrPrefix)
 	default:
 		t.Errorf("Unknown type: %v", reflect.TypeOf(expectingErrorOrPrefix))
 	}
+}
+
+func ErrorStringContains(err error, str string) bool {
+	errStr := ""
+	if err != nil {
+		errStr = err.Error()
+	}
+	return strings.Contains(errStr, str)
 }
