@@ -19,7 +19,7 @@ func ErrorStringMatchesOrContains(t *testing.T, err error, expectingErrorOrPrefi
 		if ErrorStringContains(err, expectingErrorOrPrefix) {
 			return
 		}
-		t.Errorf("error %v doesn't contain string: %v", err, expectingErrorOrPrefix)
+		t.Errorf("error `%v` doesn't contain string: `%v`", err, expectingErrorOrPrefix)
 	case error:
 		if err != nil && errors.Is(err, expectingErrorOrPrefix) {
 			return
@@ -27,7 +27,7 @@ func ErrorStringMatchesOrContains(t *testing.T, err error, expectingErrorOrPrefi
 		if expectingErrorOrPrefix != nil && ErrorStringContains(err, expectingErrorOrPrefix.Error()) {
 			return
 		}
-		t.Errorf("error %v match error: %v", err, expectingErrorOrPrefix)
+		t.Errorf("error `%v` match error: `%v`", err, expectingErrorOrPrefix)
 	case nil:
 		t.Errorf("error `%v` isn't `empty` as expected", err)
 	default:
