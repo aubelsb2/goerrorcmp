@@ -29,7 +29,7 @@ func ErrorStringMatchesOrContains(t *testing.T, err error, expectingErrorOrPrefi
 		}
 		t.Errorf("error `%v` match error: `%v`", err, expectingErrorOrPrefix)
 	case nil:
-		t.Errorf("error `%v` isn't `empty` as expected", err)
+		t.Errorf("error `%v` isn't `nil` as expected", err)
 	default:
 		t.Errorf("Unknown type: %v", reflect.TypeOf(expectingErrorOrPrefix))
 	}
